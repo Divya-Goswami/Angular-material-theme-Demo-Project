@@ -1,0 +1,23 @@
+<mat-card>
+	<mat-card-header>
+		<mat-card-title>Country</mat-card-title>
+	</mat-card-header>
+	<mat-card-content>
+		<form [formGroup]="idexForm" (ngSubmit)="onFormSubmit(idexForm)" class="full-form">
+			<mat-form-field class="full-control-width">
+				<input formControlName="code" matInput placeholder="Code">
+			</mat-form-field>
+			<mat-error>
+				<span *ngIf="!idexForm.get('code').valid && idexForm.get('code').touched">Please enter valid code !!!</span>
+			</mat-error>
+			<mat-form-field class="full-control-width">
+				<input formControlName="name" matInput placeholder="Name">
+			</mat-form-field>
+			<mat-error>
+				<span *ngIf="!idexForm.get('name').valid && idexForm.get('name').touched">Please enter name !!!</span>
+			</mat-error>
+			<button mat-raised-button color="accent" [disabled]="!idexForm.valid">Save</button>
+			<button mat-raised-button color="warn" (click)="onDelete()" *ngIf="id != 0">Delete</button>
+		</form>
+	</mat-card-content>
+</mat-card>

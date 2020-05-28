@@ -1,0 +1,14 @@
+<div class="example-container mat-elevation-z8">
+	<mat-table #table [dataSource]="dataSource">
+		<ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+			<mat-header-cell *matHeaderCellDef>{{column}}</mat-header-cell>
+			<mat-cell *matCellDef="let row">{{row[column]}}</mat-cell>
+		</ng-container>
+
+		<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+		<mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClicked(row)"></mat-row>
+	</mat-table>
+
+	<mat-paginator (page)="updatePage($event)" [length]="resultsLength" [pageSize]="perPage"></mat-paginator>
+</div>

@@ -1,0 +1,13 @@
+<!-- <nav mat-tab-nav-bar #navbar>
+	<a *ngFor="let item of items" mat-tab-link>{{ item }}</a>
+</nav> -->
+<!-- <ul class="breadcrums">
+	<li *ngFor="let item of items">{{ item }}</li>
+</ul> -->
+<nav class="breadcrumb">
+	<span *ngFor="let breadcrumb of breadcrumbs; let last = last">
+		<a [attr.disabled]="last ? true: null" [routerLink]="breadcrumb.url">{{breadcrumb.label}}</a>
+		<span *ngIf="!last">></span>
+	</span>
+	<button mat-raised-button color="primary" (click)="navigateTo()">Add</button>
+</nav>

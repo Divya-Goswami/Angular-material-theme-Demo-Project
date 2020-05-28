@@ -1,0 +1,47 @@
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
+	<mat-toolbar color="primary" class="example-toolbar">
+		<button mat-icon-button (click)="snav.toggle()">
+			<mat-icon>menu</mat-icon>
+		</button>
+		<h1 class="example-app-name">SWAYAM</h1>
+		<span class="example-fill-remaining-space"></span>
+		<button mat-icon-button class="pull-right" [matMenuTriggerFor]="appMenu">
+			<mat-icon>more_vert</mat-icon>
+		</button>
+		<mat-menu #appMenu="matMenu">
+			<a href="/logout" mat-menu-item>Logout</a>
+		</mat-menu>
+	</mat-toolbar>
+	<mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+		<mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+			<mat-nav-list>
+				<h3 mat-subheader>SWAYAM</h3>
+				<div *ngFor="let levelOne of menu">
+					<a mat-list-item [routerLink]="[levelOne.link]" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
+						<mat-icon mat-list-icon>{{ levelOne.icon }}</mat-icon>
+						<h4 mat-line>{{ levelOne.name }}</h4>
+					</a>
+					<mat-list style="margin-left:30px;" *ngIf="levelOne.items">
+						<div *ngFor="let levelTwo of levelOne.items">
+							<a mat-list-item [routerLink]="[levelTwo.link]" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
+								<h4 mat-line>{{ levelTwo.name }}</h4>
+							</a>
+							<mat-list style="margin-left:30px;" *ngIf="levelTwo.items">
+								<div *ngFor="let levelThree of levelOne.items">
+									<a mat-list-item [routerLink]="[levelThree.link]" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">
+										<h4 mat-line>{{ levelThree.name }}</h4>
+									</a>
+								</div>
+							</mat-list>
+						</div>
+					</mat-list>
+				</div>
+				<mat-divider></mat-divider>
+			</mat-nav-list>
+		</mat-sidenav>
+		<mat-sidenav-content>
+			<!-- <app-breadcrums></app-breadcrums> -->
+			<router-outlet></router-outlet>
+		</mat-sidenav-content>
+	</mat-sidenav-container>
+</div>

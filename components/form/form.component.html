@@ -1,0 +1,531 @@
+<mat-card>
+	<mat-card-header color="primary">
+		<h2 mat-card-title>Form Details</h2>
+	</mat-card-header>
+	
+	<form [formGroup]="demoForm" (ngSubmit)="onSubmit()">
+		<mat-card-content>
+			<h2>Input Fields </h2>
+
+			<!-- disabled --> 
+			<mat-form-field>
+				<input matInput placeholder="Company" disabled value="Empezar Consulancy PVT LTD">
+			</mat-form-field><br/><br/>
+			
+			<!-- 1. hidden -->
+			<input type="hidden" 
+				formControlName="id" />
+
+			<!-- 2. text, mat-icon, mat-label and mat-error -->
+			<mat-form-field appearance="outline">
+				<!-- appearance has standard, legancy, fill and outline -->
+				<mat-label>Name</mat-label>
+
+				<mat-icon matSuffix 
+					class="text-danger">*</mat-icon>
+				<!-- icon can be put with any component with matSuffix and matPreffix -->
+				<input matInput 
+					type="text" 
+					formControlName="name"
+					placeholder="Name" />
+
+				<mat-error *ngIf="demoForm.get('name').invalid && (demoForm.get('name').dirty || demoForm.get('name').touched)">
+					<mat-error *ngIf="demoForm.get('name').hasError('required')">
+						Name is Required
+					</mat-error>
+					<mat-error *ngIf="demoForm.get('name').hasError('pattern')">
+						Pls Enter Only Characters...
+					</mat-error>
+				</mat-error>
+			</mat-form-field><br/>
+
+			<!-- 3. number -->
+			<mat-form-field [floatLabel]="always">
+				<!-- floatLabel has always, never and auto -->
+				<mat-label>Amount </mat-label>
+
+				<input matInput 
+					type="number" 
+					formControlName="amount"
+					placeholder="Amount" />
+
+				<mat-hint>Rs. Only</mat-hint>
+
+				<mat-error *ngIf="demoForm.get('amount').invalid">
+					<mat-error *ngIf="demoForm.get('amount').hasError('required')">
+						Amount is Required
+					</mat-error>
+					<mat-error *ngIf="demoForm.get('amount').hasError('pattern') && !demoForm.get('amount').hasError('required')">
+						Please Enter Valid Amount Format...!
+					</mat-error>
+				</mat-error>
+			</mat-form-field><br/><br/>
+
+			<!-- 4. email -->
+			<mat-form-field [floatLabel]="auto">
+				<mat-label>Email </mat-label>
+				<input matInput 
+					type="email"
+					formControlName="email"
+					placeholder="Email" />
+
+				<mat-error *ngIf="demoForm.get('email').invalid">
+					<mat-error *ngIf="demoForm.get('email').hasError('required')">
+						Email is Required
+					</mat-error>
+					<mat-error *ngIf="demoForm.get('email').hasError('email') && !demoForm.get('email').hasError('required')">
+						Pls Enter Valid Email Format...!
+					</mat-error>
+				</mat-error>
+			</mat-form-field><br/>
+
+			<!-- 5. Password -->
+			<mat-form-field hintLabel="Please Enter between 8 to 16 Character">	
+				<!-- Two way of displaying hint 1. added with mat-form-field with hintLabel  2. using <mat-hint>tag -->
+				<input matInput 
+					type="password" 
+					formControlName="password"
+					placeholder="Password" />
+
+					<mat-error *ngIf="demoForm.get('password').invalid ">
+						<mat-error *ngIf="demoForm.get('password').hasError('required') ">
+							Please Enter Password
+						</mat-error>
+						<mat-error *ngIf="demoForm.get('password').hasError('minlength') ">
+							More than 8 Character..!
+						</mat-error>
+						<mat-error *ngIf="demoForm.get('password').hasError('maxlength') ">
+							Less than 16 Character..!
+						</mat-error>
+					</mat-error>
+			</mat-form-field><br/><br/>
+
+			<mat-form-field>
+				<input matInput 
+					type="tel" 
+					formControlName="telephone_no"
+					placeholder="Telephone No" />
+
+					<mat-error *ngIf="demoForm.get('telephone_no').invalid">
+						Please Enter Valid Telephone No
+					</mat-error>
+			</mat-form-field><br/><br/>
+
+			<!-- Extra with Additional Feature  -->
+			<mat-form-field>
+				<input matInput #message
+					maxlength="256" 
+					placeholder="Message">
+
+				<mat-hint align="start">With Length.... </mat-hint>
+				<mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+			</mat-form-field>
+
+			<h2>Textarea Fields </h2>
+			<!-- textarea -->
+			<mat-form-field [floatLabel]="never">
+				<mat-label>Address</mat-label>
+
+				<textarea matInput
+					formControlName="address"
+					placeholder="Address"></textarea>
+
+				<mat-hint>Address with Hint Here...</mat-hint>
+
+				<mat-error *ngIf="demoForm.get('address').hasError('required')">
+					Address is Required
+				</mat-error>
+			</mat-form-field><br/><br/>
+
+			<!-- custom validation -->
+			<mat-form-field>
+				<input matInput type="url" 
+					formControlName="url" 
+					placeholder="URL" />
+
+				<mat-hint>
+					http:or https://www.example.com
+				</mat-hint>
+
+				<mat-error *ngIf="demoForm.get('url').invalid">
+					<mat-error *ngIf="demoForm.get('url').hasError('required') ">
+						Please Enter URL 
+					</mat-error>
+
+					<mat-error *ngIf="demoForm.get('url').errors.validUrl && ! (demoForm.get('url').hasError('required')) ">
+						Please Enter Valid URL Include http or https with .io or .com ..!
+					</mat-error>
+				</mat-error>
+			</mat-form-field>
+
+			<mat-form-field>
+				<input matInput type="text" 
+					formControlName="website" 
+					placeholder="Website" />
+
+				<mat-error *ngIf="demoForm.get('website').invalid ">
+					<mat-error *ngIf="demoForm.get('website').hasError('required') ">
+						Website is Required.
+					</mat-error> 
+
+					<mat-error *ngIf="demoForm.get('website').errors.validWebsite   && !demoForm.get('website').hasError('required')">
+						Please Enter Website Include with .org, .in, .com ..!
+					</mat-error>
+				</mat-error>
+			</mat-form-field><br/><br/>
+
+
+			<h2>Dropdown Fields </h2>
+			<!-- type 1 default option -->
+			<mat-form-field [color]="text-info">
+				<mat-select placeholder="City"
+					[(value)]="demoForm.city" 
+					formControlName="city">
+					<!-- [(value)] used for two way binding  -->
+					<mat-option>Choose City</mat-option>
+					<mat-option value="Anjar">Anjar</mat-option>
+					<mat-option value="Aadipur">Aadipur</mat-option>
+					<mat-option value="Bhuj">Bhuj</mat-option>
+					<mat-option value="Delhi">Delhi</mat-option>
+				</mat-select>
+
+				<mat-hint>City : {{ demoForm.city }}</mat-hint>
+			</mat-form-field>
+
+			<!-- type 2 using Loop option -->
+			<mat-form-field>
+				<mat-select placeholder="State"
+					formControlName="state"
+					multiple>
+					<mat-option value="" disabled>Disabled option</mat-option>
+					<mat-option *ngFor="let state of state_values"
+						[value]="state.name">
+						{{ state.code }} - {{ state.name }}
+					</mat-option>
+				</mat-select>
+
+				<mat-error *ngIf="demoForm.get('state').hasError('required')">
+					State is Required
+				</mat-error>
+			</mat-form-field>
+
+			<!-- type 3 Dropdown with option Group -->
+			<mat-form-field>
+				<mat-select placeholder="University"
+					formControlName="university">
+					<mat-option>Choose University</mat-option>
+					<mat-optgroup *ngFor="let group of university_group"
+						[label]="group.state_name">
+						<mat-option *ngFor="let university of group.university"
+							[value]="university.name">
+							{{ university.name }}
+						</mat-option>
+					</mat-optgroup>
+				</mat-select>
+
+				<mat-error *ngIf="demoForm.get('university').hasError('required')">
+					University is Required
+				</mat-error>
+			</mat-form-field>
+
+			<h2>Radio Button Fields </h2>
+			<!-- 1. simple default -->
+			<section>
+				<label>Gender : </label>
+				<mat-radio-group formControlName="gender">
+					<mat-radio-button value="Male">Male</mat-radio-button>
+					<mat-radio-button value="Female" 
+						checked=true>Female</mat-radio-button>
+					<mat-radio-button value="Other"
+						labelPosition="before">Other</mat-radio-button>
+						<!-- labelPosition has two possible value after and before  -->
+				</mat-radio-group>
+			</section>
+
+			<!-- 2. using Loop -->
+			<section>
+				<label>Caste : </label>
+				<mat-radio-group formControlName="caste" color="accent">
+					<mat-radio-button *ngFor="let caste of radio_castes" 
+						[value]="caste"
+						color="accent">
+						{{ caste }}
+					</mat-radio-button>
+				</mat-radio-group><br/><br/>
+			</section>
+
+			<h2>Check Box Fields </h2>
+			<section>
+				<label>Hobbies</label>
+				<mat-checkbox formControlName="visiting"
+					[checked]=true>Visiting</mat-checkbox>
+				<mat-checkbox formControlName="reading"
+					[labelPosition]="before">Reading</mat-checkbox>
+				<mat-checkbox formControlName="playing"
+					[indeterminate]=true>Playing</mat-checkbox>
+			</section>
+
+			<h2>DatePicker Fields </h2>
+			<!-- 1.simple with min and max validation -->
+			<mat-form-field>
+				<input matInput
+					[matDatepicker]="picker"
+					placeholder="Date with 2015 to 2020	range"
+					formControlName="date"
+					[min]="minDate"
+					[max]="maxDate">
+				<mat-datepicker-toggle matSuffix
+					[for]="picker"></mat-datepicker-toggle>
+				<mat-datepicker #picker
+					color="accent"></mat-datepicker>
+				
+				<mat-error *ngIf="demoForm.get('date').invalid">
+					<mat-error *ngIf="demoForm.get('date').hasError('required')">
+						Date is Required
+					</mat-error>
+					<mat-error *ngIf="demoForm.get('date').hasError('matDatepickerMin')">
+						Please Enter Date Greater than 2015
+					</mat-error>
+					<mat-error *ngIf="demoForm.get('date').hasError('matDatepickerMax')">
+						Please Enter Date Less than 2020
+					</mat-error>
+				</mat-error>
+			</mat-form-field>
+
+			<!-- 2. with custom icon using mat-icon with matDatepickerFilter validation -->
+			<mat-form-field>
+				<input matInput
+					[matDatepicker]="picker1"
+					placeholder="Joining Date with Filter"
+					formControlName="joining_date"
+					[matDatepickerFilter]="dayFilter"
+					(dateInput)="addEvent($event)"
+					(dateChange)="addEvent($event)">
+				<mat-datepicker-toggle matSuffix 
+					[for]="picker1">
+					<mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+					<!-- with custom icon -->
+				</mat-datepicker-toggle>
+				<mat-datepicker #picker1
+					color="accent"></mat-datepicker>
+
+				<mat-hint>{{ display_date }}</mat-hint>
+
+				<mat-error *ngIf="demoForm.get('joining_date').invalid">
+					<mat-error *ngIf="demoForm.get('joining_date').hasError('required')">
+						Joining Date is Required
+					</mat-error>
+					<mat-error *ngIf="demoForm.get('joining_date').hasError('matDatepickerFilter')">
+						Please Enter Joining Date without Saturday and Sunday
+					</mat-error>
+				</mat-error>
+			</mat-form-field>
+
+			<!-- 3. with startview month and touchUi-->
+			<mat-form-field color="primary">
+				<input matInput
+					[matDatepicker]="picker3" 
+					placeholder="Month with touchUi"
+					formControlName="release_date">
+				<mat-datepicker-toggle matSuffix
+					[for]="picker3"></mat-datepicker-toggle>
+				<mat-datepicker #picker3
+					startView="month"
+					touchUi=true></mat-datepicker>
+				<!-- startView has month, year, or multi-year start -->
+			</mat-form-field>
+
+			<!-- 4. with startview year with button open() and close() and startAt-->
+			<mat-form-field color="accent">
+				<input matInput
+					[matDatepicker]="picker4"
+					placeholder="Year"
+					formControlName="last_date">
+				<mat-datepicker #picker4
+					startView="year"
+					[startAt]="start_date"></mat-datepicker> <!-- Start from start_date -->
+			</mat-form-field>
+				
+			<button mat-mini-fab 
+				color="primary"
+				type="button" 
+				(click)="picker4.open()">Open</button>
+
+			<!-- 5. with startview multi year-->
+			<mat-form-field color="warn">
+				<input matInput
+					[matDatepicker]="picker5"
+					placeholder="Multi Year"
+					formControlName="transfer_date">
+				<mat-datepicker-toggle matSuffix
+					[for]="picker5"></mat-datepicker-toggle>
+				<mat-datepicker #picker5
+					startView="multi-year"
+					[startAt]="start_date"
+					color="warn"></mat-datepicker>
+			</mat-form-field><br/><br/>
+
+			date format:<br/>
+			short:         {{ start_date | date:'short' }}<br/>
+			shortDate:     {{ start_date | date:'shortDate' }}<br/>
+			medium:        {{ start_date | date:'medium' }}<br/>
+			mediumDate:    {{ start_date | date:'mediumDate' }}<br/>
+			long:          {{ start_date | date:'long' }}<br/>
+			longDate:      {{ start_date | date:'longDate' }}<br/>
+			full:          {{ start_date | date:'full' }}<br/>
+			fullDate:      {{ start_date | date:'fullDate' }}<br/>
+			dd-MM-yyyy HH: mm a z: {{ start_date | date:'dd-MM-yyyy HH:mm a z' }}<br/>
+
+			<h2>Autocomplete Fields </h2>
+			<!-- autocomplete with hidden id field-->
+			<mat-form-field>
+				<input type="hidden" 
+				formControlName="country_id" />
+				<input matInput
+					type="text" 
+					placeholder="Pick one Country"
+					formControlName="country" 
+					(keyup) = "getCountriesJson()"
+					[matAutocomplete]="auto">
+				<mat-autocomplete #auto="matAutocomplete"
+					placeholder="Country">
+					<mat-option *ngFor="let country of countries_values"
+						[value]="country">
+						{{ country }}
+					</mat-option>
+				</mat-autocomplete>
+
+				<mat-error *ngIf="demoForm.get('country').hasError('required')">
+					Country is Required
+				</mat-error>
+			</mat-form-field>
+
+			<h2>Extra Fields </h2>
+			<h3>Slider</h3>
+			<mat-slider
+				[max]=100
+				[min]=0
+				[thumbLabel]=true
+				[color]="primary"
+				[tickInterval]="1"
+				[vertical]=false>
+   			 </mat-slider>
+
+			<h3>Slider Toggle</h3>
+			<mat-slide-toggle
+				[color]="warn"
+				[checked]=true>
+				Slide me!
+			</mat-slide-toggle>
+
+			<h3>Menu Toggle</h3>
+			<button mat-button
+			type="button" 
+				[matMenuTriggerFor]="menu">Menu</button>
+			<mat-menu #menu="matMenu">
+				<button mat-menu-item
+					type="button">Item 1</button>
+				<button mat-menu-item
+					type="button" >Item 2</button>
+			</mat-menu>
+
+			<!-- <mat-accordion> -->
+				<h3>Expansion Panel</h3>
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>
+							Personal data
+						</mat-panel-title>
+						<mat-panel-description>
+							Type your name and age
+						</mat-panel-description>
+					</mat-expansion-panel-header>
+
+					<mat-form-field>
+						<input matInput placeholder="First name">
+					</mat-form-field>
+
+					<mat-form-field>
+						<input matInput placeholder="Age">
+					</mat-form-field>
+
+					<mat-action-row>
+						<button mat-button
+							type="button">Click me</button>
+					</mat-action-row>
+				</mat-expansion-panel>
+			<!-- </mat-accordion> -->
+
+			<h3>Tab</h3>
+			<!-- 1. simple  -->
+			<mat-tab-group [backgroundColor]="accent">
+				<mat-tab label="First"> Content 1 </mat-tab>
+				<mat-tab label="Second"> Content 2 </mat-tab>
+				<mat-tab label="Third"> Content 3 </mat-tab>
+			</mat-tab-group><br/><br/><br/>
+
+			<!-- 2.with ng-template -->
+			<h5>With Bottom Tab</h5>
+			<mat-tab-group dynamicHeight=true
+				headerPosition="below"
+				[backgroundColor]="primary"
+				mat-stretch-tabs> <!-- handle height of tab dynamically and headerPosition header below-->
+				<mat-tab>
+					<ng-template mat-tab-label>
+						<mat-icon>thumb_up</mat-icon>
+						First
+					</ng-template>
+					Content 1
+				</mat-tab>
+
+				<mat-tab>
+					<ng-template mat-tab-label>
+						<mat-icon>thumb_up</mat-icon>
+						Second
+					</ng-template>
+					Content 2
+				</mat-tab>
+
+				<mat-tab>
+					<ng-template mat-tab-label>
+						<mat-icon>thumb_up</mat-icon>
+						Third
+					</ng-template>
+
+					Content 3
+				</mat-tab>
+			</mat-tab-group>
+			
+			<h3> Progress Spinner</h3>
+			<mat-spinner></mat-spinner>
+
+			<mat-progress-spinner
+				color="warn"
+				diameter=50
+				mode="indeterminate">
+			</mat-progress-spinner>
+
+			<mat-progress-spinner
+				color="accent"
+				strokeWidth=7
+				mode="determinate"
+				value="50">
+			</mat-progress-spinner>
+
+			<section *ngIf="demoForm.valid">
+				<mat-progress-spinner
+					mode="indeterminate"
+					color="primary"
+					value="50"> <!--when indeterminate mode value is ignored-->
+				</mat-progress-spinner>
+			</section>
+		</mat-card-content>
+		
+		<mat-card-actions>
+			<button class="btn btn-primary" type="submit">Submit</button>
+			<button class="btn btn-primary" type="button" (click) = "DbSave()">DB Save</button>
+			<button class="btn btn-primary" type="button" (click) = "DbDelete()">DB Delete</button>
+			<button class="btn btn-primary" type="button" (click) = "List()">List</button>
+		</mat-card-actions>
+	</form>
+</mat-card>

@@ -1,0 +1,15 @@
+/*.breadcrums li {
+	display:inline-block;
+}
+
+.breadcrums li a {
+	text-decoration: none;
+}*/
+
+.breadcrumb {
+	padding: 10px;
+}
+
+.breadcrumb a {
+	text-decoration: none;
+}
